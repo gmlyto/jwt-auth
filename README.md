@@ -2,12 +2,12 @@
 
 > JSON Web Token Authentication for Laravel
 
-[![Build Status](http://img.shields.io/travis/tymondesigns/jwt-auth/master.svg?style=flat-square)](https://travis-ci.org/dinho19spdesigns/jwt-auth)
-[![Scrutinizer Code Quality](http://img.shields.io/scrutinizer/g/tymondesigns/jwt-auth.svg?style=flat-square)](https://scrutinizer-ci.com/g/dinho19spdesigns/jwt-auth/)
-[![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/tymondesigns/jwt-auth.svg?style=flat-square)](https://scrutinizer-ci.com/g/dinho19spdesigns/jwt-auth/code-structure)
+[![Build Status](http://img.shields.io/travis/tymondesigns/jwt-auth/master.svg?style=flat-square)](https://travis-ci.org/tymondesigns/jwt-auth)
+[![Scrutinizer Code Quality](http://img.shields.io/scrutinizer/g/tymondesigns/jwt-auth.svg?style=flat-square)](https://scrutinizer-ci.com/g/tymondesigns/jwt-auth/)
+[![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/tymondesigns/jwt-auth.svg?style=flat-square)](https://scrutinizer-ci.com/g/tymondesigns/jwt-auth/code-structure)
 [![StyleCI](https://styleci.io/repos/23680678/shield?style=flat-square)](https://styleci.io/repos/23680678)
-[![HHVM](https://img.shields.io/hhvm/dinho19sp/jwt-auth.svg?style=flat-square)](http://hhvm.h4cc.de/package/dinho19sp/jwt-auth)
-[![Latest Version](http://img.shields.io/packagist/v/tymondesigns/jwt-auth.svg?style=flat-square)](https://packagist.org/packages/dinho19sp/jwt-auth)
+[![HHVM](https://img.shields.io/hhvm/tymondesigns/jwt-auth.svg?style=flat-square)](http://hhvm.h4cc.de/package/tymondesigns/jwt-auth)
+[![Latest Version](http://img.shields.io/packagist/v/tymondesigns/jwt-auth.svg?style=flat-square)](https://packagist.org/packages/tymondesigns/jwt-auth)
 [![Latest Dev Version](https://img.shields.io/packagist/vpre/tymondesigns/jwt-auth.svg?style=flat-square)](https://packagist.org/packages/tymondesigns/jwt-auth#dev-develop)
 [![Monthly Downloads](https://img.shields.io/packagist/dm/tymondesigns/jwt-auth.svg?style=flat-square)](https://packagist.org/packages/tymondesigns/jwt-auth)
 
