@@ -10,11 +10,8 @@
 [![Dependency Status](https://www.versioneye.com/php/tymondesigns:jwt-auth/dev-develop/badge?style=flat-square)](https://www.versioneye.com/php/dinho19sp:jwt-auth/dev-develop)
 [![PHP-Eye](https://php-eye.com/badge/tymondesigns/jwt-auth/tested.svg?style=flat-square)](https://php-eye.com/package/dinho19sp/jwt-auth)
 
-See the [WIKI](https://github.com/tymondesigns/jwt-auth/wiki) for documentation
+See the [WIKI](https://github.com/tymondesigns/jwt-auth/wiki) for official documentation
 
-<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/5S8eNjgwCUjgucKT89buNKez/dinho19sp/jwt-auth'>
-  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/5S8eNjgwCUjgucKT89buNKez/dinho19sp/jwt-auth.svg' />
-</a>
 
 ## License
 
@@ -40,6 +37,5 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-[![Beerpay](https://beerpay.io/dinho19sp/jwt-auth/badge.svg)](https://beerpay.io/dinho19sp/jwt-auth)
 
 [![SensioLabs Insight](https://insight.sensiolabs.com/projects/ba600082-7869-4ea8-b877-0bf6a86d4988/small.png)](https://insight.sensiolabs.com/projects/ba600082-7869-4ea8-b877-0bf6a86d4988)
