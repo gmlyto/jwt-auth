@@ -11,9 +11,8 @@
 
 namespace D19sp\JWTAuth\Test\Stubs;
 
-use D19sp\JWTAuth\Providers\JWT\Provider;
+use D19sp\JWTAuth\Providers\JWT\JWTProvider;
 
-class JWTProviderStub extends Provider
+class JWTProviderStub extends JWTProvider
 {
-    //
 }

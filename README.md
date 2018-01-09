@@ -1,23 +1,23 @@
+# jwt-auth
 
-![jwt-auth-banner](https://cloud.githubusercontent.com/assets/1801923/9915273/119b9350-5cae-11e5-850b-c941cac60b32.png)
+> JSON Web Token Authentication for Laravel
 
-[![Build Status](http://img.shields.io/travis/tymondesigns/jwt-auth/master.svg?style=flat-square)](https://travis-ci.org/dinho19sp/jwt-auth)
-[![Codecov branch](https://img.shields.io/codecov/c/github/tymondesigns/jwt-auth/develop.svg?style=flat-square)](https://codecov.io/github/dinho19sp/jwt-auth)
+[![Build Status](http://img.shields.io/travis/tymondesigns/jwt-auth/master.svg?style=flat-square)](https://travis-ci.org/dinho19spdesigns/jwt-auth)
+[![Scrutinizer Code Quality](http://img.shields.io/scrutinizer/g/tymondesigns/jwt-auth.svg?style=flat-square)](https://scrutinizer-ci.com/g/dinho19spdesigns/jwt-auth/)
+[![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/tymondesigns/jwt-auth.svg?style=flat-square)](https://scrutinizer-ci.com/g/dinho19spdesigns/jwt-auth/code-structure)
 [![StyleCI](https://styleci.io/repos/23680678/shield?style=flat-square)](https://styleci.io/repos/23680678)
+[![HHVM](https://img.shields.io/hhvm/dinho19sp/jwt-auth.svg?style=flat-square)](http://hhvm.h4cc.de/package/dinho19sp/jwt-auth)
 [![Latest Version](http://img.shields.io/packagist/v/tymondesigns/jwt-auth.svg?style=flat-square)](https://packagist.org/packages/dinho19sp/jwt-auth)
-[![Latest Dev Version](https://img.shields.io/packagist/vpre/tymondesigns/jwt-auth.svg?style=flat-square)](https://packagist.org/packages/dinho19sp/jwt-auth#dev-develop)
-[![Monthly Downloads](https://img.shields.io/packagist/dm/tymondesigns/jwt-auth.svg?style=flat-square)](https://packagist.org/packages/dinho19sp/jwt-auth)
-[![Dependency Status](https://www.versioneye.com/php/tymondesigns:jwt-auth/dev-develop/badge?style=flat-square)](https://www.versioneye.com/php/dinho19sp:jwt-auth/dev-develop)
-[![PHP-Eye](https://php-eye.com/badge/tymondesigns/jwt-auth/tested.svg?style=flat-square)](https://php-eye.com/package/dinho19sp/jwt-auth)
+[![Latest Dev Version](https://img.shields.io/packagist/vpre/tymondesigns/jwt-auth.svg?style=flat-square)](https://packagist.org/packages/tymondesigns/jwt-auth#dev-develop)
+[![Monthly Downloads](https://img.shields.io/packagist/dm/tymondesigns/jwt-auth.svg?style=flat-square)](https://packagist.org/packages/tymondesigns/jwt-auth)
 
 See the [WIKI](https://github.com/tymondesigns/jwt-auth/wiki) for official documentation
-
 
 ## License
 
 The MIT License (MIT)
 
-Copyright (c) 2017 Sean D19sp
+Copyright (c) 2014 Sean D19sp
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -37,5 +37,4 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-
-[![SensioLabs Insight](https://insight.sensiolabs.com/projects/ba600082-7869-4ea8-b877-0bf6a86d4988/small.png)](https://insight.sensiolabs.com/projects/ba600082-7869-4ea8-b877-0bf6a86d4988)
+[![Gratipay](https://img.shields.io/gratipay/dinho19spdesigns.svg?style=flat-square)](https://gratipay.com/~dinho19spdesigns)

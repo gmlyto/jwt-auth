@@ -14,7 +14,9 @@ namespace D19sp\JWTAuth\Claims;
 class JwtId extends Claim
 {
     /**
-     * {@inheritdoc}
+     * The claim name.
+     *
+     * @var string
      */
     protected $name = 'jti';
 }

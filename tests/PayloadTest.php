@@ -9,92 +9,65 @@
  * file that was distributed with this source code.
  */
 
-namespace D19sp\JWTAuth\Test;
+namespace D19sp\JWTAuth\Test\Providers\JWT;
 
 use Mockery;
+use Carbon\Carbon;
 use D19sp\JWTAuth\Payload;
-use D19sp\JWTAuth\Claims\Claim;
 use D19sp\JWTAuth\Claims\JwtId;
 use D19sp\JWTAuth\Claims\Issuer;
 use D19sp\JWTAuth\Claims\Subject;
 use D19sp\JWTAuth\Claims\Audience;
 use D19sp\JWTAuth\Claims\IssuedAt;
 use D19sp\JWTAuth\Claims\NotBefore;
-use D19sp\JWTAuth\Claims\Collection;
 use D19sp\JWTAuth\Claims\Expiration;
-use D19sp\JWTAuth\Validators\PayloadValidator;
 
-class PayloadTest extends AbstractTestCase
+class PayloadTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @var \Mockery\MockInterface|\D19sp\JWTAuth\Validators\PayloadValidator
-     */
-    protected $validator;
-
-    /**
-     * @var \D19sp\JWTAuth\Payload
-     */
-    protected $payload;
-
     public function setUp()
     {
-        parent::setUp();
+        Carbon::setTestNow(Carbon::createFromTimeStampUTC(123));
 
-        $this->payload = $this->getTestPayload();
-    }
-
-    /**
-     * @param  array  $extraClaims
-     *
-     * @return \D19sp\JWTAuth\Payload
-     */
-    private function getTestPayload(array $extraClaims = [])
-    {
         $claims = [
             new Subject(1),
             new Issuer('http://example.com'),
-            new Expiration($this->testNowTimestamp + 3600),
-            new NotBefore($this->testNowTimestamp),
-            new IssuedAt($this->testNowTimestamp),
+            new Expiration(123 + 3600),
+            new NotBefore(123),
+            new IssuedAt(123),
             new JwtId('foo'),
         ];
 
-        if ($extraClaims) {
-            $claims = array_merge($claims, $extraClaims);
-        }
+        $this->validator = Mockery::mock('D19sp\JWTAuth\Validators\PayloadValidator');
+        $this->validator->shouldReceive('setRefreshFlow->check');
 
-        $collection = Collection::make($claims);
-
-        $this->validator = Mockery::mock(PayloadValidator::class);
-        $this->validator->shouldReceive('setRefreshFlow->check')->andReturn($collection);
-
-        return new Payload($collection, $this->validator);
+        $this->payload = new Payload($claims, $this->validator);
     }
 
-    /**
-     * @test
-     * @expectedException \D19sp\JWTAuth\Exceptions\PayloadException
-     * @expectedExceptionMessage The payload is immutable
-     */
-    public function it_should_throw_an_exception_when_trying_to_add_to_the_payload()
+    public function tearDown()
     {
+        Mockery::close();
+    }
+
+    /** @test */
+    public function it_throws_an_exception_when_trying_to_add_to_the_payload()
+    {
+        $this->setExpectedException('D19sp\JWTAuth\Exceptions\PayloadException');
+
         $this->payload['foo'] = 'bar';
     }
 
-    /**
-     * @test
-     * @expectedException \D19sp\JWTAuth\Exceptions\PayloadException
-     * @expectedExceptionMessage The payload is immutable
-     */
-    public function it_should_throw_an_exception_when_trying_to_remove_a_key_from_the_payload()
+    /** @test */
+    public function it_throws_an_exception_when_trying_to_remove_a_key_from_the_payload()
     {
+        $this->setExpectedException('D19sp\JWTAuth\Exceptions\PayloadException');
+
         unset($this->payload['foo']);
     }
 
     /** @test */
     public function it_should_cast_the_payload_to_a_string_as_json()
     {
-        $this->assertSame((string) $this->payload, json_encode($this->payload->get(), JSON_UNESCAPED_SLASHES));
+        $this->assertEquals((string) $this->payload, json_encode($this->payload->get()));
         $this->assertJsonStringEqualsJsonString((string) $this->payload, json_encode($this->payload->get()));
     }
 
@@ -102,7 +75,7 @@ class PayloadTest extends AbstractTestCase
     public function it_should_allow_array_access_on_the_payload()
     {
         $this->assertTrue(isset($this->payload['iat']));
-        $this->assertSame($this->payload['sub'], 1);
+        $this->assertEquals($this->payload['sub'], 1);
         $this->assertArrayHasKey('exp', $this->payload);
     }
 
@@ -110,14 +83,7 @@ class PayloadTest extends AbstractTestCase
     public function it_should_get_properties_of_payload_via_get_method()
     {
         $this->assertInternalType('array', $this->payload->get());
-        $this->assertSame($this->payload->get('sub'), 1);
-
-        $this->assertSame(
-            $this->payload->get(function () {
-                return 'jti';
-            }),
-            'foo'
-        );
+        $this->assertEquals($this->payload->get('sub'), 1);
     }
 
     /** @test */
@@ -128,8 +94,8 @@ class PayloadTest extends AbstractTestCase
         list($sub, $jti) = $values;
 
         $this->assertInternalType('array', $values);
-        $this->assertSame($sub, 1);
-        $this->assertSame($jti, 'foo');
+        $this->assertEquals($sub, 1);
+        $this->assertEquals($jti, 'foo');
     }
 
     /** @test */
@@ -146,34 +112,16 @@ class PayloadTest extends AbstractTestCase
         $jti = $this->payload->getJwtId();
         $iss = $this->payload->getIssuer();
 
-        $this->assertSame($sub, 1);
-        $this->assertSame($jti, 'foo');
-        $this->assertSame($iss, 'http://example.com');
+        $this->assertEquals($sub, 1);
+        $this->assertEquals($jti, 'foo');
+        $this->assertEquals($iss, 'http://example.com');
     }
 
     /** @test */
-    public function it_should_invoke_the_instance_as_a_callable()
-    {
-        $payload = $this->payload;
-
-        $sub = $payload('sub');
-        $jti = $payload('jti');
-        $iss = $payload('iss');
-
-        $this->assertSame($sub, 1);
-        $this->assertSame($jti, 'foo');
-        $this->assertSame($iss, 'http://example.com');
-
-        $this->assertSame($payload(), $this->payload->toArray());
-    }
-
-    /**
-     * @test
-     * @expectedException \BadMethodCallException
-     * @expectedExceptionMessage The claim [getFoo] does not exist on the payload.
-     */
     public function it_should_throw_an_exception_when_magically_getting_a_property_that_does_not_exist()
     {
+        $this->setExpectedException('\BadMethodCallException');
+
         $this->payload->getFoo();
     }
 
@@ -182,75 +130,7 @@ class PayloadTest extends AbstractTestCase
     {
         $claims = $this->payload->getClaims();
 
-        $this->assertInstanceOf(Expiration::class, $claims['exp']);
-        $this->assertInstanceOf(JwtId::class, $claims['jti']);
-        $this->assertInstanceOf(Subject::class, $claims['sub']);
-
-        $this->assertContainsOnlyInstancesOf(Claim::class, $claims);
-    }
-
-    /** @test */
-    public function it_should_get_the_object_as_json()
-    {
-        $this->assertJsonStringEqualsJsonString(json_encode($this->payload), $this->payload->toJson());
-    }
-
-    /** @test */
-    public function it_should_count_the_claims()
-    {
-        $this->assertSame(6, $this->payload->count());
-        $this->assertSame(6, count($this->payload));
-        $this->assertCount(6, $this->payload);
-    }
-
-    /** @test */
-    public function it_should_match_values()
-    {
-        $values = $this->payload->toArray();
-        $values['sub'] = (string) $values['sub'];
-
-        $this->assertTrue($this->payload->matches($values));
-    }
-
-    /** @test */
-    public function it_should_match_strict_values()
-    {
-        $values = $this->payload->toArray();
-
-        $this->assertTrue($this->payload->matchesStrict($values));
-        $this->assertTrue($this->payload->matches($values, true));
-    }
-
-    /** @test */
-    public function it_should_not_match_empty_values()
-    {
-        $this->assertFalse($this->payload->matches([]));
-    }
-
-    /** @test */
-    public function it_should_not_match_values()
-    {
-        $values = $this->payload->toArray();
-        $values['sub'] = 'dummy_subject';
-
-        $this->assertFalse($this->payload->matches($values));
-    }
-
-    /** @test */
-    public function it_should_not_match_strict_values()
-    {
-        $values = $this->payload->toArray();
-        $values['sub'] = (string) $values['sub'];
-
-        $this->assertFalse($this->payload->matchesStrict($values));
-        $this->assertFalse($this->payload->matches($values, true));
-    }
-
-    /** @test */
-    public function it_should_not_match_a_non_existing_claim()
-    {
-        $values = ['foo' => 'bar'];
-
-        $this->assertFalse($this->payload->matches($values));
+        $this->assertInstanceOf('D19sp\JWTAuth\Claims\Expiration', $claims[2]);
+        $this->assertInstanceOf('D19sp\JWTAuth\Claims\JwtId', $claims[5]);
     }
 }

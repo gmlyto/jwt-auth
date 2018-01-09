@@ -14,7 +14,9 @@ namespace D19sp\JWTAuth\Claims;
 class Audience extends Claim
 {
     /**
-     * {@inheritdoc}
+     * The claim name.
+     *
+     * @var string
      */
     protected $name = 'aud';
 }

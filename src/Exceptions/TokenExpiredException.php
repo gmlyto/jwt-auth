@@ -13,5 +13,8 @@ namespace D19sp\JWTAuth\Exceptions;
 
 class TokenExpiredException extends JWTException
 {
-    //
+    /**
+     * @var int
+     */
+    protected $statusCode = 401;
 }

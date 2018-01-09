@@ -11,144 +11,41 @@
 
 namespace D19sp\JWTAuth;
 
-use Countable;
-use ArrayAccess;
-use JsonSerializable;
-use BadMethodCallException;
-use Illuminate\Support\Arr;
 use D19sp\JWTAuth\Claims\Claim;
-use D19sp\JWTAuth\Claims\Collection;
-use Illuminate\Contracts\Support\Jsonable;
-use Illuminate\Contracts\Support\Arrayable;
 use D19sp\JWTAuth\Exceptions\PayloadException;
 use D19sp\JWTAuth\Validators\PayloadValidator;
 
-class Payload implements ArrayAccess, Arrayable, Countable, Jsonable, JsonSerializable
+class Payload implements \ArrayAccess
 {
     /**
-     * The collection of claims.
+     * The array of claims.
      *
-     * @var \D19sp\JWTAuth\Claims\Collection
+     * @var \D19sp\JWTAuth\Claims\Claim[]
      */
-    private $claims;
+    private $claims = [];
 
     /**
      * Build the Payload.
      *
-     * @param  \D19sp\JWTAuth\Claims\Collection  $claims
-     * @param  \D19sp\JWTAuth\Validators\PayloadValidator  $validator
-     * @param  bool  $refreshFlow
-     *
-     * @return void
+     * @param array  $claims
+     * @param \D19sp\JWTAuth\Validators\PayloadValidator  $validator
+     * @param bool   $refreshFlow
      */
-    public function __construct(Collection $claims, PayloadValidator $validator, $refreshFlow = false)
+    public function __construct(array $claims, PayloadValidator $validator, $refreshFlow = false)
     {
-        $this->claims = $validator->setRefreshFlow($refreshFlow)->check($claims);
+        $this->claims = $claims;
+
+        $validator->setRefreshFlow($refreshFlow)->check($this->toArray());
     }
 
     /**
      * Get the array of claim instances.
      *
-     * @return \D19sp\JWTAuth\Claims\Collection
+     * @return \D19sp\JWTAuth\Claims\Claim[]
      */
     public function getClaims()
     {
         return $this->claims;
-    }
-
-    /**
-     * Checks if a payload matches some expected values.
-     *
-     * @param  array  $values
-     * @param  bool  $strict
-     *
-     * @return bool
-     */
-    public function matches(array $values, $strict = false)
-    {
-        if (empty($values)) {
-            return false;
-        }
-
-        $claims = $this->getClaims();
-
-        foreach ($values as $key => $value) {
-            if (! $claims->has($key) || ! $claims->get($key)->matches($value, $strict)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * Checks if a payload strictly matches some expected values.
-     *
-     * @param  array  $values
-     *
-     * @return bool
-     */
-    public function matchesStrict(array $values)
-    {
-        return $this->matches($values, true);
-    }
-
-    /**
-     * Get the payload.
-     *
-     * @param  mixed  $claim
-     *
-     * @return mixed
-     */
-    public function get($claim = null)
-    {
-        $claim = value($claim);
-
-        if ($claim !== null) {
-            if (is_array($claim)) {
-                return array_map([$this, 'get'], $claim);
-            }
-
-            return Arr::get($this->toArray(), $claim);
-        }
-
-        return $this->toArray();
-    }
-
-    /**
-     * Get the underlying Claim instance.
-     *
-     * @param  string  $claim
-     *
-     * @return \D19sp\JWTAuth\Claims\Claim
-     */
-    public function getInternal($claim)
-    {
-        return $this->claims->getByClaimName($claim);
-    }
-
-    /**
-     * Determine whether the payload has the claim (by instance).
-     *
-     * @param  \D19sp\JWTAuth\Claims\Claim  $claim
-     *
-     * @return bool
-     */
-    public function has(Claim $claim)
-    {
-        return $this->claims->has($claim->getName());
-    }
-
-    /**
-     * Determine whether the payload has the claim (by key).
-     *
-     * @param  string  $claim
-     *
-     * @return bool
-     */
-    public function hasKey($claim)
-    {
-        return $this->offsetExists($claim);
     }
 
     /**
@@ -158,29 +55,42 @@ class Payload implements ArrayAccess, Arrayable, Countable, Jsonable, JsonSerial
      */
     public function toArray()
     {
-        return $this->claims->toPlainArray();
+        $results = [];
+        foreach ($this->claims as $claim) {
+            $results[$claim->getName()] = $claim->getValue();
+        }
+
+        return $results;
     }
 
     /**
-     * Convert the object into something JSON serializable.
+     * Get the payload.
      *
-     * @return array
+     * @param  string  $claim
+     * @return mixed
      */
-    public function jsonSerialize()
+    public function get($claim = null)
     {
+        if (! is_null($claim)) {
+            if (is_array($claim)) {
+                return array_map([$this, 'get'], $claim);
+            }
+
+            return array_get($this->toArray(), $claim, false);
+        }
+
         return $this->toArray();
     }
 
     /**
-     * Get the payload as JSON.
+     * Determine whether the payload has the claim.
      *
-     * @param  int  $options
-     *
-     * @return string
+     * @param  \D19sp\JWTAuth\Claims\Claim  $claim
+     * @return bool
      */
-    public function toJson($options = JSON_UNESCAPED_SLASHES)
+    public function has(Claim $claim)
     {
-        return json_encode($this->toArray(), $options);
+        return in_array($claim, $this->claims);
     }
 
     /**
@@ -190,40 +100,38 @@ class Payload implements ArrayAccess, Arrayable, Countable, Jsonable, JsonSerial
      */
     public function __toString()
     {
-        return $this->toJson();
+        return json_encode($this->toArray());
     }
 
     /**
      * Determine if an item exists at an offset.
      *
      * @param  mixed  $key
-     *
      * @return bool
      */
     public function offsetExists($key)
     {
-        return Arr::has($this->toArray(), $key);
+        return array_key_exists($key, $this->toArray());
     }
 
     /**
      * Get an item at a given offset.
      *
      * @param  mixed  $key
-     *
      * @return mixed
      */
     public function offsetGet($key)
     {
-        return Arr::get($this->toArray(), $key);
+        return array_get($this->toArray(), $key, []);
     }
 
     /**
      * Don't allow changing the payload as it should be immutable.
      *
-     * @param  mixed  $key
-     * @param  mixed  $value
-     *
-     * @throws \D19sp\JWTAuth\Exceptions\PayloadException
+     * @param  mixed $key
+     * @param  mixed $value
+     * @throws Exceptions\PayloadException
+     * @return void
      */
     public function offsetSet($key, $value)
     {
@@ -233,10 +141,8 @@ class Payload implements ArrayAccess, Arrayable, Countable, Jsonable, JsonSerial
     /**
      * Don't allow changing the payload as it should be immutable.
      *
-     * @param  string  $key
-     *
-     * @throws \D19sp\JWTAuth\Exceptions\PayloadException
-     *
+     * @param  string $key
+     * @throws Exceptions\PayloadException
      * @return void
      */
     public function offsetUnset($key)
@@ -245,47 +151,25 @@ class Payload implements ArrayAccess, Arrayable, Countable, Jsonable, JsonSerial
     }
 
     /**
-     * Count the number of claims.
-     *
-     * @return int
-     */
-    public function count()
-    {
-        return count($this->toArray());
-    }
-
-    /**
-     * Invoke the Payload as a callable function.
-     *
-     * @param  mixed  $claim
-     *
-     * @return mixed
-     */
-    public function __invoke($claim = null)
-    {
-        return $this->get($claim);
-    }
-
-    /**
      * Magically get a claim value.
      *
      * @param  string  $method
-     * @param  array  $parameters
-     *
-     * @throws \BadMethodCallException
-     *
+     * @param  array   $parameters
      * @return mixed
+     * @throws \BadMethodCallException
      */
     public function __call($method, $parameters)
     {
-        if (preg_match('/get(.+)\b/i', $method, $matches)) {
+        if (! method_exists($this, $method) && starts_with($method, 'get')) {
+            $class = sprintf('D19sp\\JWTAuth\\Claims\\%s', substr($method, 3));
+
             foreach ($this->claims as $claim) {
-                if (get_class($claim) === 'D19sp\\JWTAuth\\Claims\\'.$matches[1]) {
+                if (get_class($claim) === $class) {
                     return $claim->getValue();
                 }
             }
         }
 
-        throw new BadMethodCallException(sprintf('The claim [%s] does not exist on the payload.', $method));
+        throw new \BadMethodCallException(sprintf('The claim [%s] does not exist on the payload.', $method));
     }
 }

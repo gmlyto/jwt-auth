@@ -11,48 +11,23 @@
 
 namespace D19sp\JWTAuth\Claims;
 
-use D19sp\JWTAuth\Exceptions\InvalidClaimException;
-use D19sp\JWTAuth\Exceptions\TokenExpiredException;
-use D19sp\JWTAuth\Exceptions\TokenInvalidException;
-
 class IssuedAt extends Claim
 {
-    use DatetimeTrait;
-
     /**
-     * {@inheritdoc}
+     * The claim name.
+     *
+     * @var string
      */
     protected $name = 'iat';
 
     /**
-     * {@inheritdoc}
+     * Validate the issued at claim.
+     *
+     * @param  mixed  $value
+     * @return bool
      */
-    public function validateCreate($value)
+    protected function validate($value)
     {
-        if (! is_numeric($value) || $this->isFuture($value)) {
-            throw new InvalidClaimException($this);
-        }
-
-        return $value;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function validatePayload()
-    {
-        if ($this->isFuture($this->getValue())) {
-            throw new TokenInvalidException('Issued At (iat) timestamp cannot be in the future');
-        }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function validateRefresh($refreshTTL)
-    {
-        if ($this->isPast($this->getValue() + $refreshTTL * 60)) {
-            throw new TokenExpiredException('Token has expired and can no longer be refreshed');
-        }
+        return is_numeric($value);
     }
 }

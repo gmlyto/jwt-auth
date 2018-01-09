@@ -9,21 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace D19sp\JWTAuth\Test;
+namespace D19sp\JWTAuth\Test\Providers\JWT;
 
 use D19sp\JWTAuth\Token;
 
-class TokenTest extends AbstractTestCase
+class TokenTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @var \D19sp\JWTAuth\Token
-     */
-    protected $token;
-
     public function setUp()
     {
-        parent::setUp();
-
         $this->token = new Token('foo.bar.baz');
     }
 

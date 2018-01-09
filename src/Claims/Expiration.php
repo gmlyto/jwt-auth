@@ -11,24 +11,23 @@
 
 namespace D19sp\JWTAuth\Claims;
 
-use D19sp\JWTAuth\Exceptions\TokenExpiredException;
-
 class Expiration extends Claim
 {
-    use DatetimeTrait;
-
     /**
-     * {@inheritdoc}
+     * The claim name.
+     *
+     * @var string
      */
     protected $name = 'exp';
 
     /**
-     * {@inheritdoc}
+     * Validate the expiry claim.
+     *
+     * @param  mixed  $value
+     * @return bool
      */
-    public function validatePayload()
+    protected function validate($value)
     {
-        if ($this->isPast($this->getValue())) {
-            throw new TokenExpiredException('Token has expired');
-        }
+        return is_numeric($value);
     }
 }

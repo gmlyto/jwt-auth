@@ -11,28 +11,18 @@
 
 namespace D19sp\JWTAuth\Validators;
 
-use D19sp\JWTAuth\Claims\Collection;
+use D19sp\JWTAuth\Utils;
+use D19sp\JWTAuth\Exceptions\TokenExpiredException;
 use D19sp\JWTAuth\Exceptions\TokenInvalidException;
 
-class PayloadValidator extends Validator
+class PayloadValidator extends AbstractValidator
 {
     /**
-     * The required claims.
-     *
      * @var array
      */
-    protected $requiredClaims = [
-        'iss',
-        'iat',
-        'exp',
-        'nbf',
-        'sub',
-        'jti',
-    ];
+    protected $requiredClaims = ['iss', 'iat', 'exp', 'nbf', 'sub', 'jti'];
 
     /**
-     * The refresh TTL.
-     *
      * @var int
      */
     protected $refreshTTL = 20160;
@@ -40,69 +30,81 @@ class PayloadValidator extends Validator
     /**
      * Run the validations on the payload array.
      *
-     * @param  \D19sp\JWTAuth\Claims\Collection  $value
-     *
-     * @return \D19sp\JWTAuth\Claims\Collection
+     * @param  array  $value
+     * @return void
      */
     public function check($value)
     {
         $this->validateStructure($value);
 
-        return $this->refreshFlow ? $this->validateRefresh($value) : $this->validatePayload($value);
+        if (! $this->refreshFlow) {
+            $this->validateTimestamps($value);
+        } else {
+            $this->validateRefresh($value);
+        }
     }
 
     /**
      * Ensure the payload contains the required claims and
      * the claims have the relevant type.
      *
-     * @param  \D19sp\JWTAuth\Claims\Collection  $claims
-     *
+     * @param array  $payload
      * @throws \D19sp\JWTAuth\Exceptions\TokenInvalidException
-     *
-     * @return void
+     * @return bool
      */
-    protected function validateStructure(Collection $claims)
+    protected function validateStructure(array $payload)
     {
-        if (! $claims->hasAllClaims($this->requiredClaims)) {
+        if (count(array_diff($this->requiredClaims, array_keys($payload))) !== 0) {
             throw new TokenInvalidException('JWT payload does not contain the required claims');
         }
+
+        return true;
     }
 
     /**
      * Validate the payload timestamps.
      *
-     * @param  \D19sp\JWTAuth\Claims\Collection  $claims
-     *
+     * @param  array  $payload
      * @throws \D19sp\JWTAuth\Exceptions\TokenExpiredException
      * @throws \D19sp\JWTAuth\Exceptions\TokenInvalidException
-     *
-     * @return \D19sp\JWTAuth\Claims\Collection
+     * @return bool
      */
-    protected function validatePayload(Collection $claims)
+    protected function validateTimestamps(array $payload)
     {
-        return $claims->validate('payload');
+        if (isset($payload['nbf']) && Utils::timestamp($payload['nbf'])->isFuture()) {
+            throw new TokenInvalidException('Not Before (nbf) timestamp cannot be in the future', 400);
+        }
+
+        if (isset($payload['iat']) && Utils::timestamp($payload['iat'])->isFuture()) {
+            throw new TokenInvalidException('Issued At (iat) timestamp cannot be in the future', 400);
+        }
+
+        if (Utils::timestamp($payload['exp'])->isPast()) {
+            throw new TokenExpiredException('Token has expired');
+        }
+
+        return true;
     }
 
     /**
      * Check the token in the refresh flow context.
      *
-     * @param  \D19sp\JWTAuth\Claims\Collection  $claims
-     *
-     * @throws \D19sp\JWTAuth\Exceptions\TokenExpiredException
-     *
-     * @return \D19sp\JWTAuth\Claims\Collection
+     * @param  $payload
+     * @return bool
      */
-    protected function validateRefresh(Collection $claims)
+    protected function validateRefresh(array $payload)
     {
-        return $this->refreshTTL === null ? $claims : $claims->validate('refresh', $this->refreshTTL);
+        if (isset($payload['iat']) && Utils::timestamp($payload['iat'])->addMinutes($this->refreshTTL)->isPast()) {
+            throw new TokenExpiredException('Token has expired and can no longer be refreshed', 400);
+        }
+
+        return true;
     }
 
     /**
      * Set the required claims.
      *
-     * @param  array  $claims
-     *
-     * @return $this
+     * @param array  $claims
      */
     public function setRequiredClaims(array $claims)
     {
@@ -114,9 +116,7 @@ class PayloadValidator extends Validator
     /**
      * Set the refresh ttl.
      *
-     * @param  int  $ttl
-     *
-     * @return $this
+     * @param int  $ttl
      */
     public function setRefreshTTL($ttl)
     {

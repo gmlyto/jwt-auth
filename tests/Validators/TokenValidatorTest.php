@@ -9,23 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace D19sp\JWTAuth\Test\Validators;
+namespace D19sp\JWTAuth\Test;
 
-use D19sp\JWTAuth\Test\AbstractTestCase;
 use D19sp\JWTAuth\Validators\TokenValidator;
 
-class TokenValidatorTest extends AbstractTestCase
+class TokenValidatorTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @var \D19sp\JWTAuth\Validators\TokenValidator
-     */
-    protected $validator;
-
     public function setUp()
     {
-        parent::setUp();
-
-        $this->validator = new TokenValidator;
+        $this->validator = new TokenValidator();
     }
 
     /** @test */
@@ -34,73 +26,17 @@ class TokenValidatorTest extends AbstractTestCase
         $this->assertTrue($this->validator->isValid('one.two.three'));
     }
 
-    public function dataProviderMalformedTokens()
+    /** @test */
+    public function it_should_return_false_when_providing_a_malformed_token()
     {
-        return [
-            ['one.two.'],
-            ['.two.'],
-            ['.two.three'],
-            ['one..three'],
-            ['..'],
-            [' . . '],
-            [' one . two . three '],
-        ];
+        $this->assertFalse($this->validator->isValid('one.two.three.four.five'));
     }
 
-    /**
-     * @test
-     * @dataProvider \D19sp\JWTAuth\Test\Validators\TokenValidatorTest::dataProviderMalformedTokens
-     *
-     * @param  string  $token
-     */
-    public function it_should_return_false_when_providing_a_malformed_token($token)
+    /** @test */
+    public function it_should_throw_an_axception_when_providing_a_malformed_token()
     {
-        $this->assertFalse($this->validator->isValid($token));
-    }
+        $this->setExpectedException('D19sp\JWTAuth\Exceptions\TokenInvalidException');
 
-    /**
-     * @test
-     * @dataProvider \D19sp\JWTAuth\Test\Validators\TokenValidatorTest::dataProviderMalformedTokens
-     *
-     * @param  string  $token
-     * @expectedException \D19sp\JWTAuth\Exceptions\TokenInvalidException
-     * @expectedExceptionMessage Malformed token
-     */
-    public function it_should_throw_an_exception_when_providing_a_malformed_token($token)
-    {
-        $this->validator->check($token);
-    }
-
-    public function dataProviderTokensWithWrongSegmentsNumber()
-    {
-        return [
-            ['one.two'],
-            ['one.two.three.four'],
-            ['one.two.three.four.five'],
-        ];
-    }
-
-    /**
-     * @test
-     * @dataProvider \D19sp\JWTAuth\Test\Validators\TokenValidatorTest::dataProviderTokensWithWrongSegmentsNumber
-     *
-     * @param  string  $token
-     */
-    public function it_should_return_false_when_providing_a_token_with_wrong_segments_number($token)
-    {
-        $this->assertFalse($this->validator->isValid($token));
-    }
-
-    /**
-     * @test
-     * @dataProvider \D19sp\JWTAuth\Test\Validators\TokenValidatorTest::dataProviderTokensWithWrongSegmentsNumber
-     *
-     * @param  string  $token
-     * @expectedException \D19sp\JWTAuth\Exceptions\TokenInvalidException
-     * @expectedExceptionMessage Wrong number of segments
-     */
-    public function it_should_throw_an_exception_when_providing_a_malformed_token_with_wrong_segments_number($token)
-    {
-        $this->validator->check($token);
+        $this->validator->check('one.two.three.four.five');
     }
 }

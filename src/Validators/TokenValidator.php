@@ -13,41 +13,30 @@ namespace D19sp\JWTAuth\Validators;
 
 use D19sp\JWTAuth\Exceptions\TokenInvalidException;
 
-class TokenValidator extends Validator
+class TokenValidator extends AbstractValidator
 {
     /**
      * Check the structure of the token.
      *
-     * @param  string  $value
-     *
-     * @return string
+     * @param string  $value
+     * @return void
      */
     public function check($value)
     {
-        return $this->validateStructure($value);
+        $this->validateStructure($value);
     }
 
     /**
      * @param  string  $token
-     *
      * @throws \D19sp\JWTAuth\Exceptions\TokenInvalidException
-     *
-     * @return string
+     * @return bool
      */
     protected function validateStructure($token)
     {
-        $parts = explode('.', $token);
-
-        if (count($parts) !== 3) {
+        if (count(explode('.', $token)) !== 3) {
             throw new TokenInvalidException('Wrong number of segments');
         }
 
-        $parts = array_filter(array_map('trim', $parts));
-
-        if (count($parts) !== 3 || implode('.', $parts) !== $token) {
-            throw new TokenInvalidException('Malformed token');
-        }
-
-        return $token;
+        return true;
     }
 }

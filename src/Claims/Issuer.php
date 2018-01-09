@@ -14,7 +14,9 @@ namespace D19sp\JWTAuth\Claims;
 class Issuer extends Claim
 {
     /**
-     * {@inheritdoc}
+     * The claim name.
+     *
+     * @var string
      */
     protected $name = 'iss';
 }

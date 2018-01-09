@@ -11,22 +11,10 @@
 
 namespace D19sp\JWTAuth\Exceptions;
 
-use Exception;
-use D19sp\JWTAuth\Claims\Claim;
-
 class InvalidClaimException extends JWTException
 {
     /**
-     * Constructor.
-     *
-     * @param  \D19sp\JWTAuth\Claims\Claim  $claim
-     * @param  int  $code
-     * @param  \Exception|null  $previous
-     *
-     * @return void
+     * @var int
      */
-    public function __construct(Claim $claim, $code = 0, Exception $previous = null)
-    {
-        parent::__construct('Invalid value provided for claim ['.$claim->getName().']', $code, $previous);
-    }
+    protected $statusCode = 400;
 }

@@ -13,5 +13,8 @@ namespace D19sp\JWTAuth\Exceptions;
 
 class PayloadException extends JWTException
 {
-    //
+    /**
+     * @var int
+     */
+    protected $statusCode = 500;
 }

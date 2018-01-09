@@ -1,6 +1,5 @@
 /vendor
 composer.lock
 build
-coverage.xml
 .idea
-.idea/.*
+.idea/*
