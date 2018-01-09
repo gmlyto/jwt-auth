@@ -2,3 +2,5 @@
 composer.lock
 build
 coverage.xml
+.idea
+.idea/.*
