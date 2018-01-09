@@ -3,37 +3,37 @@
 /*
  * This file is part of jwt-auth.
  *
- * (c) Sean Tymon <tymon148@gmail.com>
+ * (c) Sean D19sp <dinho19sp@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Tymon\JWTAuth\Providers;
+namespace D19sp\JWTAuth\Providers;
 
-use Tymon\JWTAuth\JWT;
-use Tymon\JWTAuth\Factory;
-use Tymon\JWTAuth\JWTAuth;
-use Tymon\JWTAuth\Manager;
-use Tymon\JWTAuth\JWTGuard;
-use Tymon\JWTAuth\Blacklist;
-use Tymon\JWTAuth\Http\Parser\Parser;
-use Tymon\JWTAuth\Http\Parser\Cookies;
+use D19sp\JWTAuth\JWT;
+use D19sp\JWTAuth\Factory;
+use D19sp\JWTAuth\JWTAuth;
+use D19sp\JWTAuth\Manager;
+use D19sp\JWTAuth\JWTGuard;
+use D19sp\JWTAuth\Blacklist;
+use D19sp\JWTAuth\Http\Parser\Parser;
+use D19sp\JWTAuth\Http\Parser\Cookies;
 use Illuminate\Support\ServiceProvider;
-use Tymon\JWTAuth\Http\Middleware\Check;
-use Tymon\JWTAuth\Http\Parser\AuthHeaders;
-use Tymon\JWTAuth\Http\Parser\InputSource;
-use Tymon\JWTAuth\Http\Parser\QueryString;
-use Tymon\JWTAuth\Http\Parser\RouteParams;
-use Tymon\JWTAuth\Contracts\Providers\Auth;
-use Tymon\JWTAuth\Contracts\Providers\Storage;
-use Tymon\JWTAuth\Validators\PayloadValidator;
-use Tymon\JWTAuth\Http\Middleware\Authenticate;
-use Tymon\JWTAuth\Http\Middleware\RefreshToken;
-use Tymon\JWTAuth\Claims\Factory as ClaimFactory;
-use Tymon\JWTAuth\Console\JWTGenerateSecretCommand;
-use Tymon\JWTAuth\Http\Middleware\AuthenticateAndRenew;
-use Tymon\JWTAuth\Contracts\Providers\JWT as JWTContract;
+use D19sp\JWTAuth\Http\Middleware\Check;
+use D19sp\JWTAuth\Http\Parser\AuthHeaders;
+use D19sp\JWTAuth\Http\Parser\InputSource;
+use D19sp\JWTAuth\Http\Parser\QueryString;
+use D19sp\JWTAuth\Http\Parser\RouteParams;
+use D19sp\JWTAuth\Contracts\Providers\Auth;
+use D19sp\JWTAuth\Contracts\Providers\Storage;
+use D19sp\JWTAuth\Validators\PayloadValidator;
+use D19sp\JWTAuth\Http\Middleware\Authenticate;
+use D19sp\JWTAuth\Http\Middleware\RefreshToken;
+use D19sp\JWTAuth\Claims\Factory as ClaimFactory;
+use D19sp\JWTAuth\Console\JWTGenerateSecretCommand;
+use D19sp\JWTAuth\Http\Middleware\AuthenticateAndRenew;
+use D19sp\JWTAuth\Contracts\Providers\JWT as JWTContract;
 
 abstract class AbstractServiceProvider extends ServiceProvider
 {
@@ -80,7 +80,7 @@ abstract class AbstractServiceProvider extends ServiceProvider
         $this->registerPayloadFactory();
         $this->registerJWTCommand();
 
-        $this->commands('tymon.jwt.secret');
+        $this->commands('dinho19sp.jwt.secret');
     }
 
     /**
@@ -92,7 +92,7 @@ abstract class AbstractServiceProvider extends ServiceProvider
     {
         $this->app['auth']->extend('jwt', function ($app, $name, array $config) {
             $guard = new JwtGuard(
-                $app['tymon.jwt'],
+                $app['dinho19sp.jwt'],
                 $app['auth']->createUserProvider($config['provider']),
                 $app['request']
             );
@@ -110,15 +110,15 @@ abstract class AbstractServiceProvider extends ServiceProvider
      */
     protected function registerAliases()
     {
-        $this->app->alias('tymon.jwt', JWT::class);
-        $this->app->alias('tymon.jwt.auth', JWTAuth::class);
-        $this->app->alias('tymon.jwt.provider.jwt', JWTContract::class);
-        $this->app->alias('tymon.jwt.provider.auth', Auth::class);
-        $this->app->alias('tymon.jwt.provider.storage', Storage::class);
-        $this->app->alias('tymon.jwt.manager', Manager::class);
-        $this->app->alias('tymon.jwt.blacklist', Blacklist::class);
-        $this->app->alias('tymon.jwt.payload.factory', Factory::class);
-        $this->app->alias('tymon.jwt.validators.payload', PayloadValidator::class);
+        $this->app->alias('dinho19sp.jwt', JWT::class);
+        $this->app->alias('dinho19sp.jwt.auth', JWTAuth::class);
+        $this->app->alias('dinho19sp.jwt.provider.jwt', JWTContract::class);
+        $this->app->alias('dinho19sp.jwt.provider.auth', Auth::class);
+        $this->app->alias('dinho19sp.jwt.provider.storage', Storage::class);
+        $this->app->alias('dinho19sp.jwt.manager', Manager::class);
+        $this->app->alias('dinho19sp.jwt.blacklist', Blacklist::class);
+        $this->app->alias('dinho19sp.jwt.payload.factory', Factory::class);
+        $this->app->alias('dinho19sp.jwt.validators.payload', PayloadValidator::class);
     }
 
     /**
@@ -128,7 +128,7 @@ abstract class AbstractServiceProvider extends ServiceProvider
      */
     protected function registerJWTProvider()
     {
-        $this->app->singleton('tymon.jwt.provider.jwt', function ($app) {
+        $this->app->singleton('dinho19sp.jwt.provider.jwt', function ($app) {
             $provider = $this->config('providers.jwt');
 
             return new $provider(
@@ -146,7 +146,7 @@ abstract class AbstractServiceProvider extends ServiceProvider
      */
     protected function registerAuthProvider()
     {
-        $this->app->singleton('tymon.jwt.provider.auth', function () {
+        $this->app->singleton('dinho19sp.jwt.provider.auth', function () {
             return $this->getConfigInstance('providers.auth');
         });
     }
@@ -158,7 +158,7 @@ abstract class AbstractServiceProvider extends ServiceProvider
      */
     protected function registerStorageProvider()
     {
-        $this->app->singleton('tymon.jwt.provider.storage', function () {
+        $this->app->singleton('dinho19sp.jwt.provider.storage', function () {
             return $this->getConfigInstance('providers.storage');
         });
     }
@@ -170,11 +170,11 @@ abstract class AbstractServiceProvider extends ServiceProvider
      */
     protected function registerManager()
     {
-        $this->app->singleton('tymon.jwt.manager', function ($app) {
+        $this->app->singleton('dinho19sp.jwt.manager', function ($app) {
             $instance = new Manager(
-                $app['tymon.jwt.provider.jwt'],
-                $app['tymon.jwt.blacklist'],
-                $app['tymon.jwt.payload.factory']
+                $app['dinho19sp.jwt.provider.jwt'],
+                $app['dinho19sp.jwt.blacklist'],
+                $app['dinho19sp.jwt.payload.factory']
             );
 
             return $instance->setBlacklistEnabled((bool) $this->config('blacklist_enabled'))
@@ -189,7 +189,7 @@ abstract class AbstractServiceProvider extends ServiceProvider
      */
     protected function registerTokenParser()
     {
-        $this->app->singleton('tymon.jwt.parser', function ($app) {
+        $this->app->singleton('dinho19sp.jwt.parser', function ($app) {
             $parser = new Parser(
                 $app['request'],
                 [
@@ -214,10 +214,10 @@ abstract class AbstractServiceProvider extends ServiceProvider
      */
     protected function registerJWT()
     {
-        $this->app->singleton('tymon.jwt', function ($app) {
+        $this->app->singleton('dinho19sp.jwt', function ($app) {
             return new JWT(
-                $app['tymon.jwt.manager'],
-                $app['tymon.jwt.parser']
+                $app['dinho19sp.jwt.manager'],
+                $app['dinho19sp.jwt.parser']
             );
         });
     }
@@ -229,11 +229,11 @@ abstract class AbstractServiceProvider extends ServiceProvider
      */
     protected function registerJWTAuth()
     {
-        $this->app->singleton('tymon.jwt.auth', function ($app) {
+        $this->app->singleton('dinho19sp.jwt.auth', function ($app) {
             return new JWTAuth(
-                $app['tymon.jwt.manager'],
-                $app['tymon.jwt.provider.auth'],
-                $app['tymon.jwt.parser']
+                $app['dinho19sp.jwt.manager'],
+                $app['dinho19sp.jwt.provider.auth'],
+                $app['dinho19sp.jwt.parser']
             );
         });
     }
@@ -245,8 +245,8 @@ abstract class AbstractServiceProvider extends ServiceProvider
      */
     protected function registerJWTBlacklist()
     {
-        $this->app->singleton('tymon.jwt.blacklist', function ($app) {
-            $instance = new Blacklist($app['tymon.jwt.provider.storage']);
+        $this->app->singleton('dinho19sp.jwt.blacklist', function ($app) {
+            $instance = new Blacklist($app['dinho19sp.jwt.provider.storage']);
 
             return $instance->setGracePeriod($this->config('blacklist_grace_period'))
                             ->setRefreshTTL($this->config('refresh_ttl'));
@@ -260,7 +260,7 @@ abstract class AbstractServiceProvider extends ServiceProvider
      */
     protected function registerPayloadValidator()
     {
-        $this->app->singleton('tymon.jwt.validators.payload', function () {
+        $this->app->singleton('dinho19sp.jwt.validators.payload', function () {
             return (new PayloadValidator)
                 ->setRefreshTTL($this->config('refresh_ttl'))
                 ->setRequiredClaims($this->config('required_claims'));
@@ -274,7 +274,7 @@ abstract class AbstractServiceProvider extends ServiceProvider
      */
     protected function registerClaimFactory()
     {
-        $this->app->singleton('tymon.jwt.claim.factory', function ($app) {
+        $this->app->singleton('dinho19sp.jwt.claim.factory', function ($app) {
             $factory = new ClaimFactory($app['request']);
             $app->refresh('request', $factory, 'setRequest');
 
@@ -289,10 +289,10 @@ abstract class AbstractServiceProvider extends ServiceProvider
      */
     protected function registerPayloadFactory()
     {
-        $this->app->singleton('tymon.jwt.payload.factory', function ($app) {
+        $this->app->singleton('dinho19sp.jwt.payload.factory', function ($app) {
             return new Factory(
-                $app['tymon.jwt.claim.factory'],
-                $app['tymon.jwt.validators.payload']
+                $app['dinho19sp.jwt.claim.factory'],
+                $app['dinho19sp.jwt.validators.payload']
             );
         });
     }
@@ -304,7 +304,7 @@ abstract class AbstractServiceProvider extends ServiceProvider
      */
     protected function registerJWTCommand()
     {
-        $this->app->singleton('tymon.jwt.secret', function () {
+        $this->app->singleton('dinho19sp.jwt.secret', function () {
             return new JWTGenerateSecretCommand;
         });
     }

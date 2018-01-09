@@ -3,20 +3,20 @@
 /*
  * This file is part of jwt-auth.
  *
- * (c) Sean Tymon <tymon148@gmail.com>
+ * (c) Sean D19sp <dinho19sp@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Tymon\JWTAuth\Test\Providers\JWT;
+namespace D19sp\JWTAuth\Test\Providers\JWT;
 
 use Mockery;
 use Exception;
 use Namshi\JOSE\JWS;
 use InvalidArgumentException;
-use Tymon\JWTAuth\Providers\JWT\Namshi;
-use Tymon\JWTAuth\Test\AbstractTestCase;
+use D19sp\JWTAuth\Providers\JWT\Namshi;
+use D19sp\JWTAuth\Test\AbstractTestCase;
 
 class NamshiTest extends AbstractTestCase
 {
@@ -26,7 +26,7 @@ class NamshiTest extends AbstractTestCase
     protected $jws;
 
     /**
-     * @var \Tymon\JWTAuth\Providers\JWT\Namshi
+     * @var \D19sp\JWTAuth\Providers\JWT\Namshi
      */
     protected $provider;
 
@@ -53,7 +53,7 @@ class NamshiTest extends AbstractTestCase
 
     /**
      * @test
-     * @expectedException \Tymon\JWTAuth\Exceptions\JWTException
+     * @expectedException \D19sp\JWTAuth\Exceptions\JWTException
      * @expectedExceptionMessage Could not create token:
      */
     public function it_should_throw_an_invalid_exception_when_the_payload_could_not_be_encoded()
@@ -80,7 +80,7 @@ class NamshiTest extends AbstractTestCase
 
     /**
      * @test
-     * @expectedException \Tymon\JWTAuth\Exceptions\TokenInvalidException
+     * @expectedException \D19sp\JWTAuth\Exceptions\TokenInvalidException
      * @expectedExceptionMessage Token Signature could not be verified.
      */
     public function it_should_throw_a_token_invalid_exception_when_the_token_could_not_be_decoded_due_to_a_bad_signature()
@@ -94,7 +94,7 @@ class NamshiTest extends AbstractTestCase
 
     /**
      * @test
-     * @expectedException \Tymon\JWTAuth\Exceptions\TokenInvalidException
+     * @expectedException \D19sp\JWTAuth\Exceptions\TokenInvalidException
      * @expectedExceptionMessage Could not decode token:
      */
     public function it_should_throw_a_token_invalid_exception_when_the_token_could_not_be_decoded()
@@ -168,7 +168,7 @@ class NamshiTest extends AbstractTestCase
 
     /**
      * @test
-     * @expectedException \Tymon\JWTAuth\Exceptions\JWTException
+     * @expectedException \D19sp\JWTAuth\Exceptions\JWTException
      * @expectedExceptionMessage The given algorithm could not be found
      */
     public function it_should_throw_a_exception_when_the_algorithm_passed_is_invalid()

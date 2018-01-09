@@ -3,32 +3,32 @@
 /*
  * This file is part of jwt-auth.
  *
- * (c) Sean Tymon <tymon148@gmail.com>
+ * (c) Sean D19sp <dinho19sp@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Tymon\JWTAuth;
+namespace D19sp\JWTAuth;
 
-use Tymon\JWTAuth\Http\Parser\Parser;
-use Tymon\JWTAuth\Contracts\Providers\Auth;
+use D19sp\JWTAuth\Http\Parser\Parser;
+use D19sp\JWTAuth\Contracts\Providers\Auth;
 
 class JWTAuth extends JWT
 {
     /**
      * The authentication provider.
      *
-     * @var \Tymon\JWTAuth\Contracts\Providers\Auth
+     * @var \D19sp\JWTAuth\Contracts\Providers\Auth
      */
     protected $auth;
 
     /**
      * Constructor.
      *
-     * @param  \Tymon\JWTAuth\Manager  $manager
-     * @param  \Tymon\JWTAuth\Contracts\Providers\Auth  $auth
-     * @param  \Tymon\JWTAuth\Http\Parser\Parser  $parser
+     * @param  \D19sp\JWTAuth\Manager  $manager
+     * @param  \D19sp\JWTAuth\Contracts\Providers\Auth  $auth
+     * @param  \D19sp\JWTAuth\Http\Parser\Parser  $parser
      *
      * @return void
      */
@@ -57,7 +57,7 @@ class JWTAuth extends JWT
     /**
      * Authenticate a user via a token.
      *
-     * @return \Tymon\JWTAuth\Contracts\JWTSubject|false
+     * @return \D19sp\JWTAuth\Contracts\JWTSubject|false
      */
     public function authenticate()
     {
@@ -73,7 +73,7 @@ class JWTAuth extends JWT
     /**
      * Alias for authenticate().
      *
-     * @return \Tymon\JWTAuth\Contracts\JWTSubject|false
+     * @return \D19sp\JWTAuth\Contracts\JWTSubject|false
      */
     public function toUser()
     {
@@ -83,7 +83,7 @@ class JWTAuth extends JWT
     /**
      * Get the authenticated user.
      *
-     * @return \Tymon\JWTAuth\Contracts\JWTSubject
+     * @return \D19sp\JWTAuth\Contracts\JWTSubject
      */
     public function user()
     {

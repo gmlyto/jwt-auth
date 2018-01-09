@@ -3,49 +3,49 @@
 /*
  * This file is part of jwt-auth.
  *
- * (c) Sean Tymon <tymon148@gmail.com>
+ * (c) Sean D19sp <dinho19sp@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Tymon\JWTAuth\Test;
+namespace D19sp\JWTAuth\Test;
 
 use Mockery;
-use Tymon\JWTAuth\Token;
-use Tymon\JWTAuth\Factory;
-use Tymon\JWTAuth\Manager;
-use Tymon\JWTAuth\Payload;
-use Tymon\JWTAuth\Blacklist;
-use Tymon\JWTAuth\Claims\JwtId;
-use Tymon\JWTAuth\Claims\Issuer;
-use Tymon\JWTAuth\Claims\Subject;
-use Tymon\JWTAuth\Claims\IssuedAt;
-use Tymon\JWTAuth\Claims\NotBefore;
-use Tymon\JWTAuth\Claims\Collection;
-use Tymon\JWTAuth\Claims\Expiration;
-use Tymon\JWTAuth\Contracts\Providers\JWT;
-use Tymon\JWTAuth\Validators\PayloadValidator;
+use D19sp\JWTAuth\Token;
+use D19sp\JWTAuth\Factory;
+use D19sp\JWTAuth\Manager;
+use D19sp\JWTAuth\Payload;
+use D19sp\JWTAuth\Blacklist;
+use D19sp\JWTAuth\Claims\JwtId;
+use D19sp\JWTAuth\Claims\Issuer;
+use D19sp\JWTAuth\Claims\Subject;
+use D19sp\JWTAuth\Claims\IssuedAt;
+use D19sp\JWTAuth\Claims\NotBefore;
+use D19sp\JWTAuth\Claims\Collection;
+use D19sp\JWTAuth\Claims\Expiration;
+use D19sp\JWTAuth\Contracts\Providers\JWT;
+use D19sp\JWTAuth\Validators\PayloadValidator;
 
 class ManagerTest extends AbstractTestCase
 {
     /**
-     * @var \Mockery\MockInterface|\Tymon\JWTAuth\Contracts\Providers\JWT
+     * @var \Mockery\MockInterface|\D19sp\JWTAuth\Contracts\Providers\JWT
      */
     protected $jwt;
 
     /**
-     * @var \Mockery\MockInterface|\Tymon\JWTAuth\Blacklist
+     * @var \Mockery\MockInterface|\D19sp\JWTAuth\Blacklist
      */
     protected $blacklist;
 
     /**
-     * @var \Mockery\MockInterface|\Tymon\JWTAuth\Factory
+     * @var \Mockery\MockInterface|\D19sp\JWTAuth\Factory
      */
     protected $factory;
 
     /**
-     * @var \Tymon\JWTAuth\Manager
+     * @var \D19sp\JWTAuth\Manager
      */
     protected $manager;
 
@@ -123,7 +123,7 @@ class ManagerTest extends AbstractTestCase
 
     /**
      * @test
-     * @expectedException \Tymon\JWTAuth\Exceptions\TokenBlacklistedException
+     * @expectedException \D19sp\JWTAuth\Exceptions\TokenBlacklistedException
      * @expectedExceptionMessage The token has been blacklisted
      */
     public function it_should_throw_exception_when_token_is_blacklisted()
@@ -249,7 +249,7 @@ class ManagerTest extends AbstractTestCase
 
     /**
      * @test
-     * @expectedException \Tymon\JWTAuth\Exceptions\JWTException
+     * @expectedException \D19sp\JWTAuth\Exceptions\JWTException
      * @expectedExceptionMessage You must have the blacklist enabled to invalidate a token.
      */
     public function it_should_throw_an_exception_when_enable_blacklist_is_set_to_false()

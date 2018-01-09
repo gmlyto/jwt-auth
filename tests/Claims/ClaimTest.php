@@ -3,22 +3,22 @@
 /*
  * This file is part of jwt-auth.
  *
- * (c) Sean Tymon <tymon148@gmail.com>
+ * (c) Sean D19sp <dinho19sp@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Tymon\JWTAuth\Test\Claims;
+namespace D19sp\JWTAuth\Test\Claims;
 
-use Tymon\JWTAuth\Claims\Expiration;
-use Tymon\JWTAuth\Test\AbstractTestCase;
+use D19sp\JWTAuth\Claims\Expiration;
+use D19sp\JWTAuth\Test\AbstractTestCase;
 use Illuminate\Contracts\Support\Arrayable;
 
 class ClaimTest extends AbstractTestCase
 {
     /**
-     * @var \Tymon\JWTAuth\Claims\Expiration
+     * @var \D19sp\JWTAuth\Claims\Expiration
      */
     protected $claim;
 
@@ -31,7 +31,7 @@ class ClaimTest extends AbstractTestCase
 
     /**
      * @test
-     * @expectedException \Tymon\JWTAuth\Exceptions\InvalidClaimException
+     * @expectedException \D19sp\JWTAuth\Exceptions\InvalidClaimException
      * @expectedExceptionMessage Invalid value provided for claim [exp]
      */
     public function it_should_throw_an_exception_when_passing_an_invalid_value()

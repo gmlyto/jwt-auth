@@ -3,7 +3,7 @@
 /*
  * This file is part of jwt-auth.
  *
- * (c) Sean Tymon <tymon148@gmail.com>
+ * (c) Sean D19sp <dinho19sp@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -220,7 +220,7 @@ return [
         |
         */
 
-        'jwt' => Tymon\JWTAuth\Providers\JWT\Namshi::class,
+        'jwt' => D19sp\JWTAuth\Providers\JWT\Namshi::class,
 
         /*
         |--------------------------------------------------------------------------
@@ -231,7 +231,7 @@ return [
         |
         */
 
-        'auth' => Tymon\JWTAuth\Providers\Auth\Illuminate::class,
+        'auth' => D19sp\JWTAuth\Providers\Auth\Illuminate::class,
 
         /*
         |--------------------------------------------------------------------------
@@ -242,7 +242,7 @@ return [
         |
         */
 
-        'storage' => Tymon\JWTAuth\Providers\Storage\Illuminate::class,
+        'storage' => D19sp\JWTAuth\Providers\Storage\Illuminate::class,
 
     ],
 

@@ -3,22 +3,22 @@
 /*
  * This file is part of jwt-auth.
  *
- * (c) Sean Tymon <tymon148@gmail.com>
+ * (c) Sean D19sp <dinho19sp@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Tymon\JWTAuth;
+namespace D19sp\JWTAuth;
 
 use BadMethodCallException;
 use Illuminate\Http\Request;
 use Illuminate\Auth\GuardHelpers;
 use Illuminate\Contracts\Auth\Guard;
-use Tymon\JWTAuth\Contracts\JWTSubject;
-use Tymon\JWTAuth\Exceptions\JWTException;
+use D19sp\JWTAuth\Contracts\JWTSubject;
+use D19sp\JWTAuth\Exceptions\JWTException;
 use Illuminate\Contracts\Auth\UserProvider;
-use Tymon\JWTAuth\Exceptions\UserNotDefinedException;
+use D19sp\JWTAuth\Exceptions\UserNotDefinedException;
 
 class JWTGuard implements Guard
 {
@@ -34,7 +34,7 @@ class JWTGuard implements Guard
     /**
      * The JWT instance.
      *
-     * @var \Tymon\JWTAuth\JWT
+     * @var \D19sp\JWTAuth\JWT
      */
     protected $jwt;
 
@@ -48,7 +48,7 @@ class JWTGuard implements Guard
     /**
      * Instantiate the class.
      *
-     * @param  \Tymon\JWTAuth\JWT  $jwt
+     * @param  \D19sp\JWTAuth\JWT  $jwt
      * @param  \Illuminate\Contracts\Auth\UserProvider  $provider
      * @param  \Illuminate\Http\Request  $request
      *
@@ -83,7 +83,7 @@ class JWTGuard implements Guard
     /**
      * Get the currently authenticated user or throws an exception.
      *
-     * @throws \Tymon\JWTAuth\Exceptions\UserNotDefinedException
+     * @throws \D19sp\JWTAuth\Exceptions\UserNotDefinedException
      *
      * @return \Illuminate\Contracts\Auth\Authenticatable
      */
@@ -130,7 +130,7 @@ class JWTGuard implements Guard
     /**
      * Create a token for a user.
      *
-     * @param  \Tymon\JWTAuth\Contracts\JWTSubject  $user
+     * @param  \D19sp\JWTAuth\Contracts\JWTSubject  $user
      *
      * @return string
      */
@@ -174,7 +174,7 @@ class JWTGuard implements Guard
      *
      * @param  bool  $forceForever
      *
-     * @return \Tymon\JWTAuth\JWT
+     * @return \D19sp\JWTAuth\JWT
      */
     public function invalidate($forceForever = false)
     {
@@ -260,7 +260,7 @@ class JWTGuard implements Guard
     /**
      * Get the raw Payload instance.
      *
-     * @return \Tymon\JWTAuth\Payload
+     * @return \D19sp\JWTAuth\Payload
      */
     public function getPayload()
     {
@@ -270,7 +270,7 @@ class JWTGuard implements Guard
     /**
      * Alias for getPayload().
      *
-     * @return \Tymon\JWTAuth\Payload
+     * @return \D19sp\JWTAuth\Payload
      */
     public function payload()
     {
@@ -280,7 +280,7 @@ class JWTGuard implements Guard
     /**
      * Set the token.
      *
-     * @param  \Tymon\JWTAuth\Token|string  $token
+     * @param  \D19sp\JWTAuth\Token|string  $token
      *
      * @return $this
      */
@@ -405,9 +405,9 @@ class JWTGuard implements Guard
     /**
      * Ensure that a token is available in the request.
      *
-     * @throws \Tymon\JWTAuth\Exceptions\JWTException
+     * @throws \D19sp\JWTAuth\Exceptions\JWTException
      *
-     * @return \Tymon\JWTAuth\JWT
+     * @return \D19sp\JWTAuth\JWT
      */
     protected function requireToken()
     {

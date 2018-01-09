@@ -3,23 +3,23 @@
 /*
  * This file is part of jwt-auth.
  *
- * (c) Sean Tymon <tymon148@gmail.com>
+ * (c) Sean D19sp <dinho19sp@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Tymon\JWTAuth;
+namespace D19sp\JWTAuth;
 
-use Tymon\JWTAuth\Support\Utils;
-use Tymon\JWTAuth\Contracts\Providers\Storage;
+use D19sp\JWTAuth\Support\Utils;
+use D19sp\JWTAuth\Contracts\Providers\Storage;
 
 class Blacklist
 {
     /**
      * The storage.
      *
-     * @var \Tymon\JWTAuth\Contracts\Providers\Storage
+     * @var \D19sp\JWTAuth\Contracts\Providers\Storage
      */
     protected $storage;
 
@@ -47,7 +47,7 @@ class Blacklist
     /**
      * Constructor.
      *
-     * @param  \Tymon\JWTAuth\Contracts\Providers\Storage  $storage
+     * @param  \D19sp\JWTAuth\Contracts\Providers\Storage  $storage
      *
      * @return void
      */
@@ -59,7 +59,7 @@ class Blacklist
     /**
      * Add the token (jti claim) to the blacklist.
      *
-     * @param  \Tymon\JWTAuth\Payload  $payload
+     * @param  \D19sp\JWTAuth\Payload  $payload
      *
      * @return bool
      */
@@ -83,7 +83,7 @@ class Blacklist
     /**
      * Get the number of minutes until the token expiry.
      *
-     * @param  \Tymon\JWTAuth\Payload  $payload
+     * @param  \D19sp\JWTAuth\Payload  $payload
      *
      * @return int
      */
@@ -101,7 +101,7 @@ class Blacklist
     /**
      * Add the token (jti claim) to the blacklist indefinitely.
      *
-     * @param  \Tymon\JWTAuth\Payload  $payload
+     * @param  \D19sp\JWTAuth\Payload  $payload
      *
      * @return bool
      */
@@ -115,7 +115,7 @@ class Blacklist
     /**
      * Determine whether the token has been blacklisted.
      *
-     * @param  \Tymon\JWTAuth\Payload  $payload
+     * @param  \D19sp\JWTAuth\Payload  $payload
      *
      * @return bool
      */
@@ -135,7 +135,7 @@ class Blacklist
     /**
      * Remove the token (jti claim) from the blacklist.
      *
-     * @param  \Tymon\JWTAuth\Payload  $payload
+     * @param  \D19sp\JWTAuth\Payload  $payload
      *
      * @return bool
      */
@@ -194,7 +194,7 @@ class Blacklist
     /**
      * Get the unique key held within the blacklist.
      *
-     * @param  \Tymon\JWTAuth\Payload  $payload
+     * @param  \D19sp\JWTAuth\Payload  $payload
      *
      * @return mixed
      */

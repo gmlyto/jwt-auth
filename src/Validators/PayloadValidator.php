@@ -3,16 +3,16 @@
 /*
  * This file is part of jwt-auth.
  *
- * (c) Sean Tymon <tymon148@gmail.com>
+ * (c) Sean D19sp <dinho19sp@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Tymon\JWTAuth\Validators;
+namespace D19sp\JWTAuth\Validators;
 
-use Tymon\JWTAuth\Claims\Collection;
-use Tymon\JWTAuth\Exceptions\TokenInvalidException;
+use D19sp\JWTAuth\Claims\Collection;
+use D19sp\JWTAuth\Exceptions\TokenInvalidException;
 
 class PayloadValidator extends Validator
 {
@@ -40,9 +40,9 @@ class PayloadValidator extends Validator
     /**
      * Run the validations on the payload array.
      *
-     * @param  \Tymon\JWTAuth\Claims\Collection  $value
+     * @param  \D19sp\JWTAuth\Claims\Collection  $value
      *
-     * @return \Tymon\JWTAuth\Claims\Collection
+     * @return \D19sp\JWTAuth\Claims\Collection
      */
     public function check($value)
     {
@@ -55,9 +55,9 @@ class PayloadValidator extends Validator
      * Ensure the payload contains the required claims and
      * the claims have the relevant type.
      *
-     * @param  \Tymon\JWTAuth\Claims\Collection  $claims
+     * @param  \D19sp\JWTAuth\Claims\Collection  $claims
      *
-     * @throws \Tymon\JWTAuth\Exceptions\TokenInvalidException
+     * @throws \D19sp\JWTAuth\Exceptions\TokenInvalidException
      *
      * @return void
      */
@@ -71,12 +71,12 @@ class PayloadValidator extends Validator
     /**
      * Validate the payload timestamps.
      *
-     * @param  \Tymon\JWTAuth\Claims\Collection  $claims
+     * @param  \D19sp\JWTAuth\Claims\Collection  $claims
      *
-     * @throws \Tymon\JWTAuth\Exceptions\TokenExpiredException
-     * @throws \Tymon\JWTAuth\Exceptions\TokenInvalidException
+     * @throws \D19sp\JWTAuth\Exceptions\TokenExpiredException
+     * @throws \D19sp\JWTAuth\Exceptions\TokenInvalidException
      *
-     * @return \Tymon\JWTAuth\Claims\Collection
+     * @return \D19sp\JWTAuth\Claims\Collection
      */
     protected function validatePayload(Collection $claims)
     {
@@ -86,11 +86,11 @@ class PayloadValidator extends Validator
     /**
      * Check the token in the refresh flow context.
      *
-     * @param  \Tymon\JWTAuth\Claims\Collection  $claims
+     * @param  \D19sp\JWTAuth\Claims\Collection  $claims
      *
-     * @throws \Tymon\JWTAuth\Exceptions\TokenExpiredException
+     * @throws \D19sp\JWTAuth\Exceptions\TokenExpiredException
      *
-     * @return \Tymon\JWTAuth\Claims\Collection
+     * @return \D19sp\JWTAuth\Claims\Collection
      */
     protected function validateRefresh(Collection $claims)
     {

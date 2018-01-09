@@ -3,16 +3,16 @@
 /*
  * This file is part of jwt-auth.
  *
- * (c) Sean Tymon <tymon148@gmail.com>
+ * (c) Sean D19sp <dinho19sp@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Tymon\JWTAuth\Http\Parser;
+namespace D19sp\JWTAuth\Http\Parser;
 
 use Illuminate\Http\Request;
-use Tymon\JWTAuth\Contracts\Http\Parser as ParserContract;
+use D19sp\JWTAuth\Contracts\Http\Parser as ParserContract;
 
 class QueryString implements ParserContract
 {

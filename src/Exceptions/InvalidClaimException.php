@@ -3,23 +3,23 @@
 /*
  * This file is part of jwt-auth.
  *
- * (c) Sean Tymon <tymon148@gmail.com>
+ * (c) Sean D19sp <dinho19sp@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Tymon\JWTAuth\Exceptions;
+namespace D19sp\JWTAuth\Exceptions;
 
 use Exception;
-use Tymon\JWTAuth\Claims\Claim;
+use D19sp\JWTAuth\Claims\Claim;
 
 class InvalidClaimException extends JWTException
 {
     /**
      * Constructor.
      *
-     * @param  \Tymon\JWTAuth\Claims\Claim  $claim
+     * @param  \D19sp\JWTAuth\Claims\Claim  $claim
      * @param  int  $code
      * @param  \Exception|null  $previous
      *

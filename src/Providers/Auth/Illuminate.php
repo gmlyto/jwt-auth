@@ -3,15 +3,15 @@
 /*
  * This file is part of jwt-auth.
  *
- * (c) Sean Tymon <tymon148@gmail.com>
+ * (c) Sean D19sp <dinho19sp@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Tymon\JWTAuth\Providers\Auth;
+namespace D19sp\JWTAuth\Providers\Auth;
 
-use Tymon\JWTAuth\Contracts\Providers\Auth;
+use D19sp\JWTAuth\Contracts\Providers\Auth;
 use Illuminate\Contracts\Auth\Guard as GuardContract;
 
 class Illuminate implements Auth
